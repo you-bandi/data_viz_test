@@ -10,6 +10,7 @@ import callbacks
 cryptocurrencies = get_crypto_list()
 
 app = dash.Dash(__name__)
+server = app.server
 app.layout = get_layout(cryptocurrencies)
 
 # Define the callback functions here
@@ -28,9 +29,6 @@ app.callback(
     Output('crypto-dropdown', 'value'),
     [Input('refresh-button', 'n_clicks')],
 )(callbacks.update_crypto_options)
-
-
-
 
 
 if __name__ == '__main__':
