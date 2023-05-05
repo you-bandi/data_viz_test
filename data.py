@@ -2,6 +2,7 @@ import requests
 import json
 from datetime import datetime, timedelta
 import time
+import streamlit as st
 
 def get_crypto_list():
 
@@ -13,7 +14,7 @@ def get_crypto_list():
         response = requests.get(trending_url)
         if response.status_code == 429:
             # The request was timed out
-            print("API Request Rate Limited, waiting 60 seconds...")
+            st.warning("API Request Rate Limited, waiting 60 seconds...")
             time.sleep(61)
             response = requests.get(trending_url)
             data = response.json()
@@ -42,14 +43,13 @@ def get_historical_prices (crypto_id, time_interval, currency):
         response = requests.get(url)
         if response.status_code == 429:
             # The request was timed out
-            print("API Request Rate Limited, waiting 60 seconds...")
+            
+            
+            return "API Request Rate Limited, waiting 60 seconds..Please refresh the dash after 60 seconds." , 0
+
             time.sleep(61)
 
-            response = requests.get(url)
-            data = response.json()
-            prices = data['prices']
-            dates = [datetime.fromtimestamp(price[0]/1000).strftime('%Y-%m-%d') for price in prices]
-            prices = [price[1] for price in prices]
+            #return get_historical_prices (crypto_id, time_interval, currency)
 
         elif response.status_code == 200:
             data = response.json()

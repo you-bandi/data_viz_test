@@ -1,5 +1,5 @@
 import dash
-from dash import Dash, dcc, html, Input, Output
+from dash import Dash, dcc, html, Input, Output, State
 
 # Define the layout of the dashboard
 '''
@@ -12,15 +12,21 @@ from dash import Dash, dcc, html, Input, Output
 
 def get_layout(cryptocurrencies):
     layout = html.Div([
-        html.H1('Cryptocurrency Price Dashboard'),
+        dcc.Store(id='input-store', data={'crypto_id':'bitcoin','time_interval':'1d','show_btc_prices':False,
+                                           'dates' : [], 'prices_usd':[],'prices_btc':[]}),
+        html.H1('Cryptocurrency Price Dashboard',style={'margin-bottom': '10px'}),
+        html.Div(id='warning-message',
+                 style={'color': 'red',
+                        'margin-bottom': '10px'}),
         html.Div([
-            html.Label('Select Cryptocurrency'),
+            html.Label('Select Cryptocurrency',style={'margin-bottom': '100px'}),
             dcc.Dropdown(
                 id='crypto-dropdown',
                 options=[{'label': name, 'value': id} for id, name in cryptocurrencies],
-                value='bitcoin'
+                value='bitcoin',
+                style={'margin-top': '10px'}
             ),
-        ]),
+        ], style={'margin-bottom': '20px'}),
         html.Div([
             html.Label('Number of Days in Past'),
             dcc.Slider(
@@ -43,7 +49,14 @@ def get_layout(cryptocurrencies):
             )
         ]),
         dcc.Graph(id='price-chart'),
-        html.Button('Refresh', id='refresh-button')
+        html.Button('Refresh', id='refresh-button'),
+        
+        # Create an interval to update the chart every 60 seconds
+        dcc.Interval(
+            id='interval-component',
+            interval=60*1000,  # 60 seconds * 1000 milliseconds
+            n_intervals=0
+        )
         
         
     ])

@@ -1,5 +1,5 @@
 import dash
-from dash import Dash, dcc, html, Input, Output
+from dash import Dash, dcc, html, Input, Output, State
 
 # Import the get_layout() function
 from dashboard_layout import get_layout
@@ -16,11 +16,9 @@ app.layout = get_layout(cryptocurrencies)
 # Define the callback functions here
 
 app.callback(
-    Output('price-chart', 'figure'),
-    [Input('crypto-dropdown', 'value'),
-     Input('time-slider', 'value'),
-     Input('refresh-button', 'n_clicks'),
-     Input('btc-prices-checkbox', 'value')],
+    [Output('price-chart', 'figure'), Output('warning-message', 'children'), Output('input-store', 'data')],
+    [Input('refresh-button', 'n_clicks'), Input('interval-component', 'n_intervals'),
+    Input('crypto-dropdown', 'value'), Input('time-slider', 'value'), Input('btc-prices-checkbox', 'value'),Input('input-store', 'data')],
     allow_duplicates=True
 )(callbacks.update_price_chart)
 
