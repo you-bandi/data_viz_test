@@ -14,12 +14,8 @@ def get_crypto_list():
         response = requests.get(trending_url)
         if response.status_code == 429:
             # The request was timed out
-            st.warning("API Request Rate Limited, waiting 60 seconds...")
-            time.sleep(61)
-            response = requests.get(trending_url)
-            data = response.json()
-            # create a list of tuples with cryptocurrency ID and name
-            cryptocurrencies = [(coin['item']['id'], coin['item']['name']) for coin in data['coins']]
+            return "API Request Rate Limited. Please wait for 60 seconds and then refresh again!"
+            
         
         elif response.status_code == 200:
             data = response.json()
@@ -39,17 +35,10 @@ def get_crypto_list():
 def get_historical_prices (crypto_id, time_interval, currency):
     url = f'https://api.coingecko.com/api/v3/coins/{crypto_id}/market_chart/?vs_currency={currency}&days={time_interval}&interval=daily'
     try:
-
+        # API Request Rate Limited (10-30 / min)
         response = requests.get(url)
         if response.status_code == 429:
-            # The request was timed out
-            
-            
-            return "API Request Rate Limited, waiting 60 seconds..Please refresh the dash after 60 seconds." , 0
-
-            time.sleep(61)
-
-            #return get_historical_prices (crypto_id, time_interval, currency)
+            return "API Request Rate Limited, waiting 60 seconds. Will auto-refresh with last input, otherwise please refresh after 60 seconds." , 0
 
         elif response.status_code == 200:
             data = response.json()
@@ -65,8 +54,3 @@ def get_historical_prices (crypto_id, time_interval, currency):
         print(e)
     
     return prices, dates
-
-
-
-
-
