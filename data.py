@@ -53,4 +53,4 @@ def get_historical_prices (crypto_id, time_interval, currency):
     except requests.exceptions.RequestException as e:
         print(e)
     
-    return prices[:,len(prices)-1], dates[:,len(dates)-1]
+    return prices[:len(prices)-1], dates[:len(dates)-1]
