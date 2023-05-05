@@ -39,7 +39,7 @@ def update_price_chart(n_clicks, n_intervals,  crypto_id, time_interval,  show_b
             fig.add_trace(go.Scatter(x=inputs['dates'], y=inputs['prices_usd'], name='Price in USD', mode='lines',line=dict(color='blue')), secondary_y=False)
             fig.add_trace(go.Scatter(x=inputs['dates'], y=inputs['prices_btc'], name='Price in BTC', mode='lines',line=dict(color='red')), secondary_y=True)
             fig.update_layout(title=f'Historical Prices for {crypto_id}', xaxis_title='Date', yaxis_title=yaxis_title,
-                               yaxis2_title_text = yaxis2_title)
+                               yaxis2_title_text = yaxis2_title, yaxis_tickformat='.2e', yaxis2_tickformat='.2e')
 
             return fig, '', inputs
         else:
@@ -47,7 +47,8 @@ def update_price_chart(n_clicks, n_intervals,  crypto_id, time_interval,  show_b
             fig.add_trace(go.Scatter(x=inputs['dates'], y=inputs['prices_usd'], name='Price in USD', mode='lines',line=dict(color='blue')))
             fig.update_layout(title=f'Historical Prices for {crypto_id}',
                           xaxis_title='Date',
-                          yaxis_title='Price (USD)')
+                          yaxis_title='Price in USD',
+                          yaxis_tickformat='.2e')
             return fig, '', inputs
     
     # If the inputs have changed or the data is not in the store, retrieve the data from the API
@@ -64,7 +65,8 @@ def update_price_chart(n_clicks, n_intervals,  crypto_id, time_interval,  show_b
                 fig.add_trace(go.Scatter(x=inputs['dates'], y=inputs['prices_usd'], name='Price in USD', mode='lines',line=dict(color='blue')))
                 fig.update_layout(title=f'Historical Prices for {prev_crypto_id}',
                           xaxis_title='Date',
-                          yaxis_title='Price (USD)')
+                          yaxis_title='Price in USD',
+                          yaxis_tickformat='.2e')
                 return fig, prices_usd, inputs
             
             # If API limit does not exceed, create a chart with primary axis as price in USD and secondary axis as price in BTC.
@@ -74,7 +76,7 @@ def update_price_chart(n_clicks, n_intervals,  crypto_id, time_interval,  show_b
             fig.add_trace(go.Scatter(x=dates, y=prices_usd, name='Price in USD', mode='lines',line=dict(color='blue')), secondary_y=False)
             fig.add_trace(go.Scatter(x=dates, y=prices_btc, name='Price in BTC', mode='lines',line=dict(color='red')), secondary_y=True)
             fig.update_layout(title=f'Historical Prices for {crypto_id}', xaxis_title='Date', yaxis_title=yaxis_title,
-                               yaxis2_title_text = yaxis2_title)
+                               yaxis2_title_text = yaxis2_title, yaxis_tickformat='.2e', yaxis2_tickformat='.2e')
 
             # Update the price in btc to the inputs.
             inputs['prices_btc'] =  prices_btc
@@ -87,7 +89,8 @@ def update_price_chart(n_clicks, n_intervals,  crypto_id, time_interval,  show_b
                 fig.add_trace(go.Scatter(x=inputs['dates'], y=inputs['prices_usd'], name='Price in USD', mode='lines',line=dict(color='blue')))
                 fig.update_layout(title=f'Historical Prices for {prev_crypto_id}',
                           xaxis_title='Date',
-                          yaxis_title='Price (USD)')
+                          yaxis_title='Price in USD',
+                          yaxis_tickformat='.2e')
 
                 return fig, prices_usd, inputs
             
@@ -95,7 +98,7 @@ def update_price_chart(n_clicks, n_intervals,  crypto_id, time_interval,  show_b
             yaxis_title = 'Price in USD'
             fig = go.Figure()
             fig.add_trace(go.Scatter(x=dates, y=prices_usd, name='Price in USD', mode='lines',line=dict(color='blue')))
-            fig.update_layout(title=f'Historical Prices for {crypto_id}', xaxis_title='Date', yaxis_title=yaxis_title)
+            fig.update_layout(title=f'Historical Prices for {crypto_id}', xaxis_title='Date', yaxis_title=yaxis_title, yaxis_tickformat='.2e')
 
         inputs ['crypto_id'] =  crypto_id 
         inputs ['time_interval'] =  time_interval

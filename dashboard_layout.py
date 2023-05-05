@@ -8,6 +8,7 @@ from dash import Dash, dcc, html, Input, Output, State
 3. A checkbox to select if the user wants to see the prices in BTC
 4. The graph showing historical price trends of the selected cryptocurrency
 5. A refresh button to refresh the list of trending cryptocurrencies 
+6. A few hidden components for error messages and storing previous inputs. 
 '''
 
 def get_layout(cryptocurrencies):
