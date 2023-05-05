@@ -18,7 +18,7 @@ def update_price_chart(n_clicks, n_intervals,  crypto_id, time_interval,  show_b
     fig = go.Figure()
     
     # Retrieve the previous inputs from the store
-    print(crypto_id, n_intervals)
+    
     prev_crypto_id = inputs.get('crypto_id', 'bitcoin')
     prev_time_interval = inputs.get('time_interval', '1d')
     prev_show_btc_prices = inputs.get('show_btc_prices', [])
